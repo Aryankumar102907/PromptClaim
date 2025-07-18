@@ -83,24 +83,42 @@ Follow these steps to get your Intelligent Query Retrieval System up and running
     yarn build
     ```
 
-### ⚙️ Configuration (`config.ini`)
+### ⚙️ Configuration (Environment Variables)
 
-**Crucial Step:** Create a `config.ini` file in the project's root directory. This file is intentionally excluded from version control to protect your sensitive information.
+**Crucial Step:** Configure your environment variables. This project uses environment variables for sensitive information like API keys and dynamic paths. These variables are intentionally not committed to version control.
 
-**Example `config.ini`:**
+*   **`GEMINI_API_KEY`**: Your Google Gemini API key.
+*   **`DOCUMENTS_DIR`**: Path to your documents directory (e.g., `documents/`).
+*   **`FAISS_INDEX_DIR`**: Path to your FAISS index directory (e.g., `faiss_index/`).
+*   **`CHUNK_DATA_DIR`**: Path to your chunked data directory (e.g., `data/sample_chunks/`).
 
-```ini
-[GEMINI]
-API_KEY = YOUR_GEMINI_API_KEY
+**How to set environment variables:**
 
-[PATHS]
-DOCUMENTS_DIR = documents/
-FAISS_INDEX_DIR = faiss_index/
-CHUNK_DATA_DIR = data/sample_chunks/
+**For Windows (Command Prompt):**
+```bash
+set GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+set DOCUMENTS_DIR=documents/
+set FAISS_INDEX_DIR=faiss_index/
+set CHUNK_DATA_DIR=data/sample_chunks/
+```
+**For Windows (PowerShell):**
+```powershell
+$env:GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+$env:DOCUMENTS_DIR="documents/"
+$env:FAISS_INDEX_DIR="faiss_index/"
+$env:CHUNK_DATA_DIR="data/sample_chunks/"
+```
+**For macOS/Linux:**
+```bash
+export GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+export DOCUMENTS_DIR="documents/"
+export FAISS_INDEX_DIR="faiss_index/"
+export CHUNK_DATA_DIR="data/sample_chunks/"
 ```
 
 *   **Replace `YOUR_GEMINI_API_KEY`** with your actual Google Gemini API key.
 *   **Verify paths:** Ensure `DOCUMENTS_DIR`, `FAISS_INDEX_DIR`, and `CHUNK_DATA_DIR` are correctly set relative to the project root.
+*   For persistent environment variables, refer to your operating system's documentation.
 
 ## ▶️ Running the Application
 
