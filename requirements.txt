@@ -1,0 +1,14 @@
+google-generativeai
+PyPDF2
+python-dotenv
+sentence-transformers
+faiss-cpu
+httpx
+python-docx
+pdfminer.six
+waitress
+fastapi
+uvicorn
+python-jose
+requests
+python-multipart

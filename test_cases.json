@@ -1,0 +1,14 @@
+[
+  {
+    "document": "BAJHLIP23020V012223.pdf",
+    "query": "46M, air ambulance, Nagpur, 1-month policy",
+    "expected_decision": "Rejected",
+    "expected_justification_keywords": ["Inpatient Hospitalization claim", "Emergency life threatening health conditions"]
+  },
+  {
+    "document": "CHOTGDP23004V012223.pdf",
+    "query": "What is the waiting period for pre-existing diseases?",
+    "expected_decision": "Rejected",
+    "expected_justification_keywords": ["waiting period", "pre-existing diseases"]
+  }
+]

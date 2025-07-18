@@ -1,0 +1,10 @@
+Standard Health Insurance Exclusions (Reference):
+
+1. Treatments arising from or related to:
+   - Suicide or attempted suicide, self-harm, or intentional self-inflicted injuries.
+   - Drug abuse, alcohol abuse, or substance addiction.
+   - Cosmetic surgery, aesthetic procedures, or plastic surgery, unless reconstructive surgery is medically necessary due to accidental bodily injury, burns, or congenital anomalies.
+   - Dental treatments, dental surgery, or oral procedures unless necessitated by accidental injury to natural teeth.
+   - Infertility treatments, sterility, assisted reproduction (like IVF), or voluntary termination of pregnancy (abortion due to unwanted pregnancy), unless medically required to save the mother's life.
+   - War, acts of war, invasion, acts of foreign enemies, hostilities (whether war be declared or not), civil war, rebellion, revolution, insurrection, military or usurped power, or acts of terrorism.
+   - Participation in any unlawful act, criminal activity, or dangerous activities/sports (e.g., professional racing, mountaineering, skydiving) where there is an inherent risk of injury.
