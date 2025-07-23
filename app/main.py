@@ -4,17 +4,16 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.config import DOCUMENTS_DIR, INDEX_DIR, PROMPT_PATH, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from core.config import DOCUMENTS_DIR, INDEX_DIR
 from core.indexing import global_model, global_faiss_index, global_all_chunks_data, load_global_index_and_chunks, save_global_index_and_chunks, build_faiss_index_from_embeddings
+from utils.file_ops import extract_text_from_document
+from utils.chunking import recursive_chunk_text
 
-from app.routers import auth, documents, query
+from app.routers import documents, query
 
 # Ensure directories exist
 os.makedirs(DOCUMENTS_DIR, exist_ok=True)
 os.makedirs(INDEX_DIR, exist_ok=True)
-
-if not all([GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, SECRET_KEY]):
-    raise ValueError("Missing one or more Google OAuth or JWT environment variables.")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -88,7 +87,6 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(documents.router, tags=["documents"])
 app.include_router(query.router, tags=["query"])
 

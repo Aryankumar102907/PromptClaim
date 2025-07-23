@@ -1,10 +1,9 @@
 import os
 from pathlib import Path
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException
 
 from core.config import DOCUMENTS_DIR, INDEX_DIR, MAX_CHUNK_SIZE, OVERLAP
 from core.indexing import global_model, global_faiss_index, global_all_chunks_data, save_global_index_and_chunks
-from core.security import get_current_user
 
 from utils.file_ops import extract_text_from_document
 from utils.chunking import recursive_chunk_text
@@ -13,13 +12,13 @@ from utils.semantic_search import build_faiss_index_from_embeddings
 router = APIRouter()
 
 @router.get("/documents")
-async def list_documents(current_user: str = Depends(get_current_user)):
+async def list_documents():
     """Lists all the available documents."""
     documents = os.listdir(DOCUMENTS_DIR)
     return {"documents": documents}
 
 @router.post("/upload_document")
-async def upload_document(file: UploadFile = File(...), current_user: str = Depends(get_current_user)):
+async def upload_document(file: UploadFile = File(...)):
     global global_faiss_index, global_all_chunks_data, global_model
 
     if not global_model.model:
@@ -71,7 +70,7 @@ async def upload_document(file: UploadFile = File(...), current_user: str = Depe
         raise HTTPException(status_code=500, detail=f"Error processing document: {e}")
 
 @router.delete("/documents/{filename}")
-async def delete_document(filename: str, current_user: str = Depends(get_current_user)):
+async def delete_document(filename: str):
     global global_faiss_index, global_all_chunks_data, global_model
 
     file_location = Path(DOCUMENTS_DIR) / filename

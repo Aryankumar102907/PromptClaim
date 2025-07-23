@@ -76,42 +76,9 @@ export default function JurisAIApp() {
   }, [chatSessions, activeSession]);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    if (token) {
-      localStorage.setItem('access_token', token);
-      window.history.replaceState({}, document.title, "/"); // Clean the URL
-    }
-
-    const storedToken = localStorage.getItem('access_token');
-    if (!storedToken) {
-      window.location.href = '/landing';
-      return;
-    }
-
-    try {
-      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
-      setAuthenticatedUser({
-        ...mockUser,
-        name: decodedToken.name || mockUser.name,
-        email: decodedToken.sub || mockUser.email,
-        avatar: decodedToken.picture || mockUser.avatar,
-        initials: decodedToken.name ? decodedToken.name.charAt(0).toUpperCase() : mockUser.initials,
-      });
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      localStorage.removeItem('access_token');
-      window.location.href = '/landing';
-      return;
-    }
-
     const fetchDocuments = async () => {
       try {
-        const res = await fetch('http://localhost:8000/documents', {
-          headers: {
-            'Authorization': `Bearer ${storedToken}`,
-          },
-        });
+        const res = await fetch('http://localhost:8000/documents');
         if (!res.ok) {
           throw new Error('Failed to fetch documents.');
         }
@@ -168,8 +135,6 @@ export default function JurisAIApp() {
 
       } catch (err) {
         console.error('Failed to fetch documents.', err);
-        localStorage.removeItem('access_token');
-        window.location.href = '/landing';
       }
     };
     fetchDocuments();
@@ -226,16 +191,10 @@ export default function JurisAIApp() {
     setIsLoading(true);
 
     try {
-      const storedToken = localStorage.getItem('access_token');
-      if (!storedToken) {
-        throw new Error('No access token found.');
-      }
-
       const response = await fetch('http://localhost:8000/query', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${storedToken}`,
         },
         body: JSON.stringify({
           policy_filename,
@@ -340,16 +299,8 @@ export default function JurisAIApp() {
     formData.append('file', file);
 
     try {
-      const storedToken = localStorage.getItem('access_token');
-      if (!storedToken) {
-        throw new Error('No access token found.');
-      }
-
       const response = await fetch('http://localhost:8000/upload_document', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${storedToken}`,
-        },
         body: formData,
       });
 
@@ -398,16 +349,8 @@ export default function JurisAIApp() {
 
     setIsLoading(true);
     try {
-      const storedToken = localStorage.getItem('access_token');
-      if (!storedToken) {
-        throw new Error('No access token found.');
-      }
-
       const response = await fetch(`http://localhost:8000/documents/${filename}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${storedToken}`,
-        },
       });
 
       if (!response.ok) {
@@ -483,10 +426,7 @@ export default function JurisAIApp() {
     });
   };
 
-  const handleSignOut = () => {
-    localStorage.removeItem('access_token');
-    window.location.href = '/landing';
-  };
+  
 
   const currentSession = getCurrentSession();
 
@@ -611,20 +551,7 @@ export default function JurisAIApp() {
             </div>
           </div>
 
-          {/* Sidebar Footer */}
-          <div className="p-4 border-t border-gray-200">
-            <Button 
-              onClick={handleSignOut}
-              className="w-full bg-red-600 hover:bg-red-700 text-white"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
-            <div className="text-xs text-gray-500 text-center mt-2">
-              <p>Intelligent Query System v1.0</p>
-              <p className="mt-1">LLM-Powered</p>
-            </div>
-          </div>
+          
         </div>
       </div>
 
