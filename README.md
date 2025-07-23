@@ -55,11 +55,11 @@ Follow these steps to get your Intelligent Query Retrieval System up and running
 
 2.  **Set up your Python environment:**
     ```bash
-    python -m venv venv
+    python -m venv .venv
     # On Windows:
-    venv\Scripts\activate
+    .venv/Scripts/activate
     # On macOS/Linux:
-    source venv/bin/activate
+    source .venv/bin/activate
     pip install -r requirements.txt
     ```
 
